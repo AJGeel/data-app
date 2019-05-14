@@ -42,9 +42,18 @@ function updateGuestValue(){
 
 function logAllPresent(){
   console.log(`Is Sark home? ${(p1_presence.toString()).toUpperCase()}`);
-  console.log(`Is Arthur home? ${(p2_presence.toString()).toUpperCase()}`);
-  console.log(`Is Yizhou home? ${(p3_presence.toString()).toUpperCase()}`);
-  console.log(`There are currently ${guests_present} guests present.`);
+
+  setTimeout(function(){
+    console.log(`Is Arthur home? ${(p2_presence.toString()).toUpperCase()}`);
+  }, 200);
+
+  setTimeout(function(){
+    console.log(`Is Yizhou home? ${(p3_presence.toString()).toUpperCase()}`);
+  }, 400);
+
+  setTimeout(function(){
+    console.log(`There are currently ${guests_present} guests present.`);
+  }, 600);
 }
 
 function clickPerson(elem) {
@@ -85,17 +94,18 @@ function clickPerson(elem) {
 }
 
 function sendPresenceData(){
-  // logAllPresent();
-  // console.log(' ');
+  console.log(' ');
+  logAllPresent();
   let now = new Date();
 
-  console.log(`Data has been sent. Entry number ${amountOfDataLinesSent} at ${now}`);
-
+  setTimeout(function(){
+    console.log(`%c Data has been sent. Entry number ${amountOfDataLinesSent} at ${now}`, 'color: #3FA7A7');
+  }, 2000);
 }
 
 var interval = setInterval(function() {
   sendPresenceData();
   amountOfDataLinesSent+=1;
-}, 5000)
+}, 10000)
 
 clickPerson(document.querySelectorAll('.person'));
