@@ -22,6 +22,8 @@ body{
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+
+  animation: fade-in 1s cubic-bezier(0,.25,.25,1);
 }
 
 .container_graph{
@@ -146,4 +148,16 @@ body{
 
 .guests .btn:last-child{
   margin-left: 20px;
+}
+
+
+/* ATTEMPT AT EDITING AN EMBEDDED HTML PAGE */
+
+/* .trace5211b411-155e-41e4-9be6-581a0e1e841f > .lines > path{
+  stroke: rgb(41,136,136) !important;
+} */
+
+@keyframes fade-in{
+  0%    { transform: translateY(50px) scale(.9); opacity: 0; }
+  100%  { transform: translateY(0px) scale(1)   ; opacity: 1; }
 }
