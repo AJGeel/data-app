@@ -2,6 +2,14 @@
   background-color: initial;
 }
 
+html{
+  background: linear-gradient(233.14deg, #3FA7A7 0%, #197473 100%);
+}
+
+*:hover{
+  cursor: default;
+}
+
 body{
   background: linear-gradient(233.14deg, #3FA7A7 0%, #197473 100%);
   font-family: "Futura", "IBM Plex Sans", sans-serif;
@@ -84,6 +92,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   transition: all .5s ease-in-out;
 }
@@ -99,6 +108,10 @@ body{
   align-items: center;
 
   transition: all .5s ease-in-out;
+}
+
+.container_presence .guests .btn{
+  cursor: pointer;
 }
 
 .btn_presence .active{
