@@ -1,0 +1,36 @@
+<html>
+<head>
+</head>
+<body>
+
+
+<script>
+
+var p1_presence = false,
+    p2_presence = false,
+    p3_presence = false,
+    guests_present = 0;
+
+// Create a string of parameters that will be passed to the PHP script
+var paramsToPHP = "p1=" + p1_presence + "&p2=" + p2_presence + "&p3=" + p3_presence + "&num_guests=" + guests_present;
+
+
+// XMLHttpRequest to the PHP script that stores the passed parameters in the .csv file
+function sendDataToPHP(){
+  const script_url = "csv-add.php?" + paramsToPHP;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", script_url, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.onload = function() {
+    // do something to response
+    console.log("Data successfully sent. See below for more info:");
+    console.log(this.responseText);
+  };
+
+  // Function that sends the XHR,  call this whenever user input occurs.
+  xhr.send(paramsToPHP);
+}
+
+</script>
+</body>
+</html

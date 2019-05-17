@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>data-app</title>
+    <title>Data-Enabled Design &mdash; Informed Step</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,11 +12,29 @@
     <link rel="icon" type="image/ico" href="https://arthurgeel.com/favicon.png" />
   </head>
 
+  <!--
+
+  TO DO LIST: (Fri 17 May, 14:04)
+
+  - Make it responsive: suited for use on the iPad.
+  - Update names to make it suited to Oli's house.
+  - Fix the .php script, so that the enclosing quotation marks are removed.
+  - Add the feedback modal: let them rate (1-5) their kitchen cleanliness or air quality.
+  - Add real-time data visualisations of the .csv data.
+  - Change the 'guests' '+' and '-' buttons.
+
+    IPAD 10.5 SIZE:
+
+    2X SIZE @ 2224 x 1668 pixels
+
+    1X SIZE @ 1112 x 834 pixels
+  -->
+
 <body>
 
   <div class="container">
     <div class="container_graph">
-      <iframe class="graph" width="1920" height="700" frameborder="0" scrolling="no" src="//plot.ly/~id_group7/0.embed"></iframe>
+      <!-- <iframe class="graph" width="1920" height="700" frameborder="0" scrolling="no" src="//plot.ly/~id_group7/0.embed"></iframe> -->
     </div>
 
     <div class="container_presence">
@@ -27,9 +45,10 @@
       </div>
 
       <div class="item btn_presence">
-        <div class="person">Sark</div>
-        <div class="person">Arthur</div>
-        <div class="person">Yizhou</div>
+        <div class="person">Olivier</div>
+        <div class="person">Hertog 1</div>
+        <div class="person">Hertog 2</div>
+        <div class="person">Hertog 3</div>
         <div class="guests" id="person_guests">
           <span>Guests: <span id="number_present">0</span></span>
           <div class="btn" id="btn_remove">-</div>
