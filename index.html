@@ -16,17 +16,12 @@
 
   TO DO LIST: (Fri 17 May, 14:04)
 
-  - Make it responsive: suited for use on the iPad.
-  - Update names to make it suited to Oli's house.
   - Fix the .php script, so that the enclosing quotation marks are removed.
   - Add the feedback modal: let them rate (1-5) their kitchen cleanliness or air quality.
   - Add real-time data visualisations of the .csv data.
-  - Change the 'guests' '+' and '-' buttons.
 
     IPAD 10.5 SIZE:
-
     2X SIZE @ 2224 x 1668 pixels
-
     1X SIZE @ 1112 x 834 pixels
   -->
 
@@ -40,21 +35,21 @@
     <div class="container_presence">
 
       <div class="item">
-        <h1>Kitchen Presence</h1>
-        <p>Tap on your name to indicate your <br>presence in the kitchen.</p>
+        <h1>Wie is er in de keuken?</h1>
+        <p>Tik op je naam als je de keuken in loopt. Tik nogmaals op je naam als je weer weg gaat.</p>
       </div>
 
       <div class="item btn_presence">
         <div class="person">Olivier</div>
-        <div class="person">Hertog 1</div>
-        <div class="person">Hertog 2</div>
-        <div class="person">Hertog 3</div>
-        <div class="guests" id="person_guests">
-          <span>Guests: <span id="number_present">0</span></span>
+        <div class="person">Hertog #1</div>
+        <div class="person">Hertog #2</div>
+        <div class="person">Hertog #3</div>
+        <div class="guests" id="person_guests">Gasten: <span id="number_present">0</span></div>
+        <div class="guests-btns">
           <div class="btn" id="btn_remove">-</div>
           <div class="btn" id="btn_add">+</div>
+        </div>
       </div>
-    </div>
 
   </div>
 

@@ -1,9 +1,10 @@
 var p1_presence = false;
 var p2_presence = false;
 var p3_presence = false;
+var p4_presence = false;
 var guests_present = 0;
 
-var paramsToPHP = "asdf";
+var paramsToPHP = "placeholder";
 
 
 const guests_present_container = document.getElementById('person_guests');
@@ -55,23 +56,27 @@ function clickPerson(elem) {
       if (this.classList.contains('active') === true){
         this.classList.remove('active');
 
-        if (this.innerHTML === 'Sark'){
+        if (this.innerHTML === 'Olivier'){
           p1_presence = false;
-        } else if (this.innerHTML === 'Arthur'){
+        } else if (this.innerHTML === 'Hertog #1'){
           p2_presence = false;
-        } else if (this.innerHTML === 'Yizhou'){
+        } else if (this.innerHTML === 'Hertog #2'){
           p3_presence = false;
+        }  else if (this.innerHTML === 'Hertog #3'){
+          p4_presence = false;
         }
 
       } else {
         this.classList.add('active');
 
-        if (this.innerHTML === 'Sark'){
+        if (this.innerHTML === 'Olivier'){
           p1_presence = true;
-        } else if (this.innerHTML === 'Arthur'){
+        } else if (this.innerHTML === 'Hertog #1'){
           p2_presence = true;
-        } else if (this.innerHTML === 'Yizhou'){
+        } else if (this.innerHTML === 'Hertog #2'){
           p3_presence = true;
+        }  else if (this.innerHTML === 'Hertog #3'){
+          p4_presence = true;
         }
       }
 
@@ -86,7 +91,7 @@ function clickPerson(elem) {
 clickPerson(document.querySelectorAll('.person'));
 
 function generateParamsForPHP(){
-  paramsToPHP = "p1=" + p1_presence + "&p2=" + p2_presence + "&p3=" + p3_presence + "&num_guests=" + guests_present;
+  paramsToPHP = "p1=" + p1_presence + "&p2=" + p2_presence + "&p3=" + p3_presence + "&p4=" + p4_presence + "&num_guests=" + guests_present;
 }
 
 // XMLHttpRequest to the PHP script that stores the passed parameters in the .csv file
@@ -99,8 +104,6 @@ function makeXHR(){
 
   // Log whenever the XHR is finished
   xhr.onload = function() {
-    // do something to response
-    // console.log("DEBUG Data successfully sent. See below for more info:");
     console.log(this.responseText);
   };
 

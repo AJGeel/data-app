@@ -28,7 +28,7 @@ body{
 
 .container_graph{
   /* border: 1px solid red; */
-  height: 70%;
+  height: 75%;
   width: 100%;
   padding: 40px;
 
@@ -53,7 +53,7 @@ body{
 
 .container_presence{
   /* border: 1px solid red; */
-  height: 30%;
+  height: 25%;
   width: 100%;
   display: flex;
   padding: 0px 60px;
@@ -65,18 +65,20 @@ body{
 
 .container_presence .item{
   color: #fff;
+  flex-wrap: wrap;
 }
 
 .container_presence .item:first-child{
-  margin-right: 100px;
+  margin-right: 60px;
+  width: 60%;
 }
 
 .container_presence .item h1{
-  font-size: 46px;
+  font-size: 36px;
 }
 
 .container_presence .item p{
-  font-size: 30px;
+  font-size: 24px;
   margin-top: 6px;
   opacity: .7;
   font-weight: 200;
@@ -89,7 +91,10 @@ body{
   padding: 22px 40px;
   font-size: 26px;
   border-radius: 2px;
-  margin-right: 20px;
+  flex-grow: 1;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  /* margin-right: 20px; */
 
   display: flex;
   justify-content: center;
@@ -108,11 +113,18 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
+  margin-left: 10px;
+  margin-bottom: 10px;
 
   transition: all .5s ease-in-out;
 }
 
-.container_presence .guests .btn{
+.guests-btns{
+  display: flex;
+}
+
+.container_presence .guests-btns .btn{
   cursor: pointer;
 }
 
@@ -131,23 +143,21 @@ body{
   display: flex;
 }
 
-.btn_presence:last-child span span{
-  margin-right: 40px;
+.btn_presence:last-child span{
+  margin-left: 10px;
 }
 
-.btn_presence:last-child .btn{
+.btn_presence .btn{
   border: 1px solid white;
-  width: 40px;
-  height: 40px;
+  border-left: none;
+  width: 70px;
+  height: auto;
+  margin-bottom: 10px;
 
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all .5s ease-in-out;
-}
-
-.guests .btn:last-child{
-  margin-left: 20px;
 }
 
 
