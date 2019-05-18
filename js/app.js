@@ -17,47 +17,49 @@ var p2_presence = false;
 var p3_presence = false;
 var p4_presence = false;
 var guests_present = 0;
+var kitchenRating = "placeholder";
+
+// Initialize a global variable for the parameter string that fill be fed to the PHP script, server-side.
+var paramsForPresence = "placeholder";
+var paramsForRatings = "placeholder";
 
 
-// Grab the DOM elements for the Feedback Modal and its 'close' button.
+// Grab the DOM element for the Feedback Modal.
 var feedbackModal = document.getElementById("feedbackModal");
-// var feedbackModalClose = document.getElementsByClassName("close")[0];
+var snackbar = document.getElementById("snackbar");
 
-var kitchenRating = document.getElementsByClassName("rating");
+// Function that displays a snackbar at the top of the screen for 3 seconds
+function showSnackbar(){
+  snackbar.className = "show";
+  setTimeout(function(){
+    snackbar.className = snackbar.className.replace("show", "");
+  }, 3000);
+}
+
+// function showFeedbackModal(){
+//   feedbackModal.className = "show";
+// }
+//
+// function closeFeedbackModal(){
+//   feedbackModal.className = feedbackModal.className.replace("show", "");
+// }
+
+
+var kitchenRatingDOM = document.getElementsByClassName("rating");
 
 function clickRating(elem) {
   for (var i = 0; i < elem.length; i++) {
 
     elem[i].addEventListener("click", function(e) {
-      var current = this;
-      console.log("Rating: " + this.innerHTML);
 
-      // if (this.classList.contains('active') === true){
-      //   this.classList.remove('active');
-      //
-      //   if (this.innerHTML === 'Olivier'){
-      //     p1_presence = false;
-      //   } else if (this.innerHTML === 'Hertog #1'){
-      //     p2_presence = false;
-      //   } else if (this.innerHTML === 'Hertog #2'){
-      //     p3_presence = false;
-      //   }  else if (this.innerHTML === 'Hertog #3'){
-      //     p4_presence = false;
-      //   }
-      //
-      // } else {
-      //   this.classList.add('active');
-      //
-      //   if (this.innerHTML === 'Olivier'){
-      //     p1_presence = true;
-      //   } else if (this.innerHTML === 'Hertog #1'){
-      //     p2_presence = true;
-      //   } else if (this.innerHTML === 'Hertog #2'){
-      //     p3_presence = true;
-      //   }  else if (this.innerHTML === 'Hertog #3'){
-      //     p4_presence = true;
-      //   }
-      // }
+      kitchenRating = this.innerHTML;
+
+      sendRatingToPHP();
+
+      setTimeout(function(){
+        feedbackModal.style.display = "none";
+        showSnackbar();
+      }, 500);
 
     });
   };
@@ -68,9 +70,7 @@ function clickRating(elem) {
 clickRating(document.querySelectorAll('.rating'));
 
 
-kitchenRating.onclick = function(){
-  console.log("rating received");
-}
+
 
 // // When the user clicks on <span> (x), close the modal
 // feedbackModalClose.onclick = function() {
@@ -81,11 +81,11 @@ kitchenRating.onclick = function(){
 window.onclick = function(event) {
   if (event.target == feedbackModal) {
     feedbackModal.style.display = "none";
+
+    kitchenRating = "clicked-outside-of-modal";
+    sendRatingToPHP();
   }
 }
-
-// Initialize a global variable for the parameter string that fill be fed to the PHP script, server-side.
-var paramsToPHP = "placeholder";
 
 // Selecting the DOM elements for the persons- and guests present.
 const guests_present_container = document.getElementById('person_guests');
@@ -99,7 +99,7 @@ add_guest_remove.addEventListener("click", function(){
       console.log("Can't remove any more guests.");
     }
     updateGuestValue();
-    // sendDataToPHP();       // Uncomment this if you would like to submit data every user interaction.
+    // sendPresenceToPHP();       // Uncomment this if you would like to submit data every user interaction.
 })
 
 const add_guest_btn = document.getElementById('btn_add');
@@ -112,7 +112,7 @@ add_guest_btn.addEventListener("click", function(){
   }
 
   updateGuestValue();
-  // sendDataToPHP();       // Uncomment this if you would like to submit data every user interaction.
+  // sendPresenceToPHP();       // Uncomment this if you would like to submit data every user interaction.
 })
 
 function updateGuestValue(){
@@ -166,7 +166,7 @@ function clickPerson(elem) {
       // Makes a modal visible, allowing users to submit their rating.
       feedbackModal.style.display = "block";
 
-      // sendDataToPHP();       // Uncomment this if you would like to submit data every user interaction.
+      // sendPresenceToPHP();       // Uncomment this if you would like to submit data every user interaction.
       e.preventDefault();
     });
   };
@@ -177,14 +177,19 @@ function clickPerson(elem) {
 clickPerson(document.querySelectorAll('.person'));
 
 // Function that generates a valid parameter string that is to be fed in the PHP script.
-function generateParamsForPHP(){
-  paramsToPHP = "p1=" + p1_presence + "&p2=" + p2_presence + "&p3=" + p3_presence + "&p4=" + p4_presence + "&num_guests=" + guests_present;
+function generateParamsForPresence(){
+  paramsForPresence = "p1=" + p1_presence + "&p2=" + p2_presence + "&p3=" + p3_presence + "&p4=" + p4_presence + "&num_guests=" + guests_present;
+}
+
+// Function that generates a valid parameter string that is to be fed in the PHP script.
+function generateParamsForRatings(){
+  paramsForRatings = "kitchenRating=" + kitchenRating;
 }
 
 // XMLHttpRequest to the PHP script that stores the passed parameters in the .csv file
-function makeXHR(){
+function makeXHRForPresence(){
   // Select the right destination, plus add the parameters
-  const script_url = "csv-add.php?" + paramsToPHP;
+  const script_url = "csv-add.php?" + paramsForPresence;
   var xhr = new XMLHttpRequest();
   xhr.open("POST", script_url, true);
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -195,7 +200,23 @@ function makeXHR(){
   };
 
   // Function that sends the XHR,  call this whenever user input occurs.
-  xhr.send(paramsToPHP);
+  xhr.send(paramsForPresence);
+}
+
+// XMLHttpRequest to the PHP script that stores the passed parameters in the .csv file
+function makeXHRForRatings(){
+  const script_url = "csv-ratings.php?" + paramsForRatings;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", script_url, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+  // Log whenever the XHR is finished
+  xhr.onload = function() {
+    console.log(this.responseText);
+  };
+
+  // Function that sends the XHR,  call this whenever user input occurs.
+  xhr.send(paramsForRatings);
 }
 
 
@@ -215,15 +236,20 @@ function makeXHR(){
 
 
 // Function that collects client-side data and sends it to PHP using a XHR.
-function sendDataToPHP(){
-  generateParamsForPHP();
-  makeXHR();
+function sendPresenceToPHP(){
+  generateParamsForPresence();
+  makeXHRForPresence();
+}
+
+function sendRatingToPHP(){
+  generateParamsForRatings();
+  makeXHRForRatings();
 }
 
 // Function that submits a data entry every 30 seconds
 setInterval(function(){
-  sendDataToPHP();
+  sendPresenceToPHP();
 }, 30000);
 
 // Upon loading the full page, submit a data entry
-sendDataToPHP();
+sendPresenceToPHP();
