@@ -18,6 +18,72 @@ var p3_presence = false;
 var p4_presence = false;
 var guests_present = 0;
 
+
+// Grab the DOM elements for the Feedback Modal and its 'close' button.
+var feedbackModal = document.getElementById("feedbackModal");
+// var feedbackModalClose = document.getElementsByClassName("close")[0];
+
+var kitchenRating = document.getElementsByClassName("rating");
+
+function clickRating(elem) {
+  for (var i = 0; i < elem.length; i++) {
+
+    elem[i].addEventListener("click", function(e) {
+      var current = this;
+      console.log("Rating: " + this.innerHTML);
+
+      // if (this.classList.contains('active') === true){
+      //   this.classList.remove('active');
+      //
+      //   if (this.innerHTML === 'Olivier'){
+      //     p1_presence = false;
+      //   } else if (this.innerHTML === 'Hertog #1'){
+      //     p2_presence = false;
+      //   } else if (this.innerHTML === 'Hertog #2'){
+      //     p3_presence = false;
+      //   }  else if (this.innerHTML === 'Hertog #3'){
+      //     p4_presence = false;
+      //   }
+      //
+      // } else {
+      //   this.classList.add('active');
+      //
+      //   if (this.innerHTML === 'Olivier'){
+      //     p1_presence = true;
+      //   } else if (this.innerHTML === 'Hertog #1'){
+      //     p2_presence = true;
+      //   } else if (this.innerHTML === 'Hertog #2'){
+      //     p3_presence = true;
+      //   }  else if (this.innerHTML === 'Hertog #3'){
+      //     p4_presence = true;
+      //   }
+      // }
+
+    });
+  };
+
+}
+
+// Adds the eventlistener to all persons in the HTML page
+clickRating(document.querySelectorAll('.rating'));
+
+
+kitchenRating.onclick = function(){
+  console.log("rating received");
+}
+
+// // When the user clicks on <span> (x), close the modal
+// feedbackModalClose.onclick = function() {
+//   feedbackModal.style.display = "none";
+// }
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == feedbackModal) {
+    feedbackModal.style.display = "none";
+  }
+}
+
 // Initialize a global variable for the parameter string that fill be fed to the PHP script, server-side.
 var paramsToPHP = "placeholder";
 
@@ -61,7 +127,7 @@ function updateGuestValue(){
   guests_currently_present.innerHTML = guests_present;
 }
 
-
+// Function that updates the persons' presence variable status, and updates the style to reflect that.
 function clickPerson(elem) {
   for (var i = 0; i < elem.length; i++) {
 
@@ -94,6 +160,12 @@ function clickPerson(elem) {
           p4_presence = true;
         }
       }
+
+      // console.log("SUMMON POPUP —— How do you rate your kitchen cleanliness? (1—5).");
+
+      // Makes a modal visible, allowing users to submit their rating.
+      feedbackModal.style.display = "block";
+
       // sendDataToPHP();       // Uncomment this if you would like to submit data every user interaction.
       e.preventDefault();
     });
@@ -125,6 +197,21 @@ function makeXHR(){
   // Function that sends the XHR,  call this whenever user input occurs.
   xhr.send(paramsToPHP);
 }
+
+
+/* TO DO: FUNCTION THAT LOGS THE CLIENT'S IP ADDRESS */
+// function logIP(){
+//   const script_url = "log-ip";
+//   var xhr = new XMLHttpRequest();
+//   xhr.open("POST", script_url, true);
+//   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//
+//   xhr.onload = function() {
+//     console.log(this.responseText);
+//   };
+//
+//   xhr.send();
+// }
 
 
 // Function that collects client-side data and sends it to PHP using a XHR.
