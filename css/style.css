@@ -285,6 +285,22 @@ body{
   animation: fade-snackbar-in 0.5s, fade-snackbar-out 0.5s 2.5s;
 }
 
+.container_graph{
+  /* background-color: #fff; */
+}
+
+#google-charts-container{
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0px 2px 44px rgba(245, 245, 245, 0.3);
+}
+
 /* Animations to fade the snackbar in and out */
 @-webkit-keyframes fade-snackbar-in {
   from {top: 0; opacity: 0;}

@@ -36,15 +36,6 @@ function showSnackbar(){
   }, 3000);
 }
 
-// function showFeedbackModal(){
-//   feedbackModal.className = "show";
-// }
-//
-// function closeFeedbackModal(){
-//   feedbackModal.className = feedbackModal.className.replace("show", "");
-// }
-
-
 var kitchenRatingDOM = document.getElementsByClassName("rating");
 
 function clickRating(elem) {
@@ -218,22 +209,6 @@ function makeXHRForRatings(){
   // Function that sends the XHR,  call this whenever user input occurs.
   xhr.send(paramsForRatings);
 }
-
-
-/* TO DO: FUNCTION THAT LOGS THE CLIENT'S IP ADDRESS */
-// function logIP(){
-//   const script_url = "log-ip";
-//   var xhr = new XMLHttpRequest();
-//   xhr.open("POST", script_url, true);
-//   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//
-//   xhr.onload = function() {
-//     console.log(this.responseText);
-//   };
-//
-//   xhr.send();
-// }
-
 
 // Function that collects client-side data and sends it to PHP using a XHR.
 function sendPresenceToPHP(){
