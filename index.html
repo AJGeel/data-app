@@ -23,11 +23,11 @@
 
   <!--
 
-  TO DO LIST: (Fri 17 May, 14:04)
+  TO DO LIST: (Thu 23 May, 12:41)
 
+  - Add in LOCALSTORAGE support for presence values.
+  - Include refresh timer for every X minutes.
   - Fix the .php script, so that the enclosing quotation marks are removed.
-  - Add the feedback modal: let them rate (1-5) their kitchen cleanliness or air quality.
-  - Add real-time data visualisations of the .csv data.
 
     IPAD 10.5 SIZE:
     2X SIZE @ 2224 x 1668 pixels
@@ -57,36 +57,36 @@
 
 <div id="snackbar">Je beoordeling is ontvangen &mdash;&mdash; bedankt!</div>
 
-  <div class="container">
-    <div class="container_graph">
-      <div class="container_graph_container">
-        <h2>Our graph title goes here &mdash; on this line.</h2>
-        <div id="google-charts-container" width="1032" height="544"></div>
-      </div>
-      <!-- <iframe class="graph" width="1032" height="544" frameborder="0" scrolling="no" src="//plot.ly/~id_group7/0.embed"></iframe> -->
+<div class="container">
+  <div class="container_graph">
+    <div class="container_graph_container">
+      <h2>Our graph title goes here &mdash; on this line.</h2>
+      <div id="google-charts-container" width="1032" height="544"></div>
+    </div>
+    <!-- <iframe class="graph" width="1032" height="544" frameborder="0" scrolling="no" src="//plot.ly/~id_group7/0.embed"></iframe> -->
+  </div>
+
+  <div class="container_presence">
+
+    <div class="item">
+      <h1>Wie is er in de keuken?</h1>
+      <p>Tik op je naam als je de keuken in loopt. Tik nogmaals op je naam als je weer weg gaat.</p>
+
     </div>
 
-    <div class="container_presence">
-
-      <div class="item">
-        <h1>Wie is er in de keuken?</h1>
-        <p>Tik op je naam als je de keuken in loopt. Tik nogmaals op je naam als je weer weg gaat.</p>
-
+    <div class="item btn_presence">
+      <div class="person" id="person_1">Olivier</div>
+      <div class="person" id="person_2">Hertog #1</div>
+      <div class="person" id="person_3">Hertog #2</div>
+      <div class="person" id="person_4">Hertog #3</div>
+      <div class="guests" id="person_guests">Gasten: <span id="number_present">0</span></div>
+      <div class="guests-btns">
+        <div class="btn" id="btn_remove">-</div>
+        <div class="btn" id="btn_add">+</div>
       </div>
+    </div>
 
-      <div class="item btn_presence">
-        <div class="person">Olivier</div>
-        <div class="person">Hertog #1</div>
-        <div class="person">Hertog #2</div>
-        <div class="person">Hertog #3</div>
-        <div class="guests" id="person_guests">Gasten: <span id="number_present">0</span></div>
-        <div class="guests-btns">
-          <div class="btn" id="btn_remove">-</div>
-          <div class="btn" id="btn_add">+</div>
-        </div>
-      </div>
-
-  </div>
+</div>
 
 </div>
 

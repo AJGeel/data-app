@@ -12,21 +12,98 @@
 // Initializing global variables for the things we want to measure: 'Huize Hertogs' presence over time.
 // In this case, we have four main research participants (listed from p1 through p4), and we also account
 // for a total of 9 guests.
-var p1_presence = false;
-var p2_presence = false;
-var p3_presence = false;
-var p4_presence = false;
-var guests_present = 0;
+var p1_presence = false,
+    p2_presence = false,
+    p3_presence = false,
+    p4_presence = false,
+    guests_present = 0;
+
 var kitchenRating = "placeholder";
+
+var button_p1 = document.getElementById("person_1"),
+    button_p2 = document.getElementById("person_2"),
+    button_p3 = document.getElementById("person_3"),
+    button_p4 = document.getElementById("person_4");
+
+
+// Selecting the DOM elements for the persons- and guests present.
+const guests_present_container = document.getElementById('person_guests');
+const guests_currently_present = document.getElementById('number_present');
+
+const add_guest_remove = document.getElementById('btn_remove');
+const add_guest_btn = document.getElementById('btn_add');
+
+// Grab the DOM element for the Feedback Modal.
+var feedbackModal = document.getElementById("feedbackModal");
+var snackbar = document.getElementById("snackbar");
+
+// UNCOMMENT TO DELETE ALL LOCALSTORAGE VALUES
+// localStorage.clear();
+
+function checkIfLocalStorageExists(){
+  if (localStorage.getItem("p1_presence") === null) {localStorage.setItem("p1_presence", "false");}
+  if (localStorage.getItem("p2_presence") === null) {localStorage.setItem("p2_presence", "false");}
+  if (localStorage.getItem("p3_presence") === null) {localStorage.setItem("p3_presence", "false");}
+  if (localStorage.getItem("p4_presence") === null) {localStorage.setItem("p4_presence", "false");}
+  if (localStorage.getItem("guests_present") === null) {localStorage.setItem("guests_present", "0");}
+}
+
+function updateVariablesFromLocalStorage(){
+  p1_presence = JSON.parse(localStorage.getItem("p1_presence"));
+  p2_presence = JSON.parse(localStorage.getItem("p2_presence"));
+  p3_presence = JSON.parse(localStorage.getItem("p3_presence"));
+  p4_presence = JSON.parse(localStorage.getItem("p4_presence"));
+  guests_present = JSON.parse(localStorage.getItem("guests_present"));
+}
+
+function updateLocalStorage(){
+  localStorage.setItem("p1_presence", JSON.stringify(p1_presence));
+  localStorage.setItem("p2_presence", JSON.stringify(p2_presence));
+  localStorage.setItem("p3_presence", JSON.stringify(p3_presence));
+  localStorage.setItem("p4_presence", JSON.stringify(p4_presence));
+  localStorage.setItem("guests_present", JSON.stringify(guests_present));
+}
+
+checkIfLocalStorageExists();
+updateVariablesFromLocalStorage();
+
+function updateButtonStatesToLS(){
+  if (p1_presence){
+    if (button_p1.classList.contains('active') === false){
+      button_p1.classList.add('active');
+    }
+  }
+
+  if (p2_presence){
+    if (button_p2.classList.contains('active') === false){
+      button_p2.classList.add('active');
+    }
+  }
+
+  if (p3_presence){
+    if (button_p3.classList.contains('active') === false){
+      button_p3.classList.add('active');
+    }
+  }
+
+  if (p4_presence){
+    if (button_p4.classList.contains('active') === false){
+      button_p4.classList.add('active');
+    }
+  }
+
+  updateGuestValue();
+}
+
+updateButtonStatesToLS();
+
+// foo = localStorage.getItem("foo");
 
 // Initialize a global variable for the parameter string that fill be fed to the PHP script, server-side.
 var paramsForPresence = "placeholder";
 var paramsForRatings = "placeholder";
 
 
-// Grab the DOM element for the Feedback Modal.
-var feedbackModal = document.getElementById("feedbackModal");
-var snackbar = document.getElementById("snackbar");
 
 // Function that displays a snackbar at the top of the screen for 3 seconds
 function showSnackbar(){
@@ -61,13 +138,6 @@ function clickRating(elem) {
 clickRating(document.querySelectorAll('.rating'));
 
 
-
-
-// // When the user clicks on <span> (x), close the modal
-// feedbackModalClose.onclick = function() {
-//   feedbackModal.style.display = "none";
-// }
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == feedbackModal) {
@@ -78,11 +148,7 @@ window.onclick = function(event) {
   }
 }
 
-// Selecting the DOM elements for the persons- and guests present.
-const guests_present_container = document.getElementById('person_guests');
-const guests_currently_present = document.getElementById('number_present');
 
-const add_guest_remove = document.getElementById('btn_remove');
 add_guest_remove.addEventListener("click", function(){
     if( guests_present > 0){
       guests_present -= 1;
@@ -93,7 +159,7 @@ add_guest_remove.addEventListener("click", function(){
     // sendPresenceToPHP();       // Uncomment this if you would like to submit data every user interaction.
 })
 
-const add_guest_btn = document.getElementById('btn_add');
+
 add_guest_btn.addEventListener("click", function(){
 
   if( guests_present < 9){
@@ -116,6 +182,8 @@ function updateGuestValue(){
   }
   // Update the innerHTML value of the amount of guests present.
   guests_currently_present.innerHTML = guests_present;
+
+  updateLocalStorage();
 }
 
 // Function that updates the persons' presence variable status, and updates the style to reflect that.
@@ -156,6 +224,8 @@ function clickPerson(elem) {
 
       // Makes a modal visible, allowing users to submit their rating.
       feedbackModal.style.display = "block";
+
+      updateLocalStorage();
 
       // sendPresenceToPHP();       // Uncomment this if you would like to submit data every user interaction.
       e.preventDefault();
@@ -228,3 +298,8 @@ setInterval(function(){
 
 // Upon loading the full page, submit a data entry
 sendPresenceToPHP();
+
+setInterval(function(){
+  // Force the page to refresh, one hour after it was first loaded.
+  location.refresh();
+}, 1000 * 60 * 60);
