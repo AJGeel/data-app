@@ -1,28 +1,20 @@
-
 var csvData = new Array();
 var participantList = ['Olivier', 'Hertog 1', 'Hertog 2', 'Hertog 3'];
 
+var container = document.getElementById('google-charts-container');
+
 //start & end minute:
-var start_min = new Array();
+var start_min = new Array(),
+    end_min   = new Array(),
+    start_sec = new Array(),
+    end_sec   = new Array();
+
 for (var i = 0; i < 4; i++) {
   start_min[i] = new Array();
-}//2d array created
-
-var end_min = new Array();
-for (var i = 0; i < 4; i++) {
   end_min[i] = new Array();
-}//2d array created
-
-//start & end second:
-var start_sec = new Array();
-for (var i = 0; i < 4; i++) {
   start_sec[i] = new Array();
-}//2d array created
-
-var end_sec = new Array();
-for (var i = 0; i < 4; i++) {
   end_sec[i] = new Array();
-}//2d array created
+}
 
 function csv2array(){
 	var request = new XMLHttpRequest();
@@ -33,10 +25,7 @@ function csv2array(){
 	var jsonObject = request.responseText.split(/\r?\n|\r/);
 	for (var i = 0; i < jsonObject.length; i++) {
 	  csvData.push(jsonObject[i].split('T').join(',').split('-').join(',').split(':').join(',').split(','));
-	  //csvData.push(jsonObject[i].split(','));
 	}
-	// Retreived data from csv file content
-	// console.log(csvData);
 }
 
 function startend_ts(){
@@ -151,18 +140,33 @@ google.charts.load("current", {packages: ["timeline"]});
 
 function drawChart() {
   // Define the chart to be drawn.
+  var container = document.getElementById('google-charts-container');
   var data = new google.visualization.DataTable();
-  data.addColumn({type: 'string',id: 'Name'  });
-  data.addColumn({type: 'date',  id: 'Start' });
-  data.addColumn({type: 'date',  id: 'End'   });
+
+  // let blankStyle = "opacity: 0";
+
+  data.addColumn({ type: 'string', id: 'Name'    });
+  data.addColumn({ type: 'string', role: 'style' });
+  data.addColumn({ type: 'date',   id: 'Start'   });
+  data.addColumn({ type: 'date',   id: 'End'     });
 
   for (var participant = 0; participant < participantList.length; participant++){
-    // loop through the full participant list, rendering a "width 0" entry for each participant
-    data.addRow([participantList[participant], new Date(0, 0, 0, 0, 0), new Date(0, 0, 0, 0, 0)]);
+    // Loop through all participants, add a min-width, invisible row to make sure they display even if there is no data.
+    data.addRow([
+      participantList[participant],
+      null,
+      new Date(0, 0, 0, 22, 0),
+      new Date(0, 0, 0, 22, 0)
+    ]);
 
     // Loop through all participant's data, adding the real entries
     for (var i = 0; i < start_min[participant].length; i++){
-      data.addRows([[participantList[participant], new Date(0, 0, 0, start_min[participant][i], start_sec[participant][i]), new Date(0, 0, 0, end_min[participant][i], end_sec[participant][i])],]);
+      data.addRows([
+        [participantList[participant],
+        null,
+        new Date(0, 0, 0, start_min[participant][i], start_sec[participant][i]),
+        new Date(0, 0, 0, end_min[participant][i], end_sec[participant][i])],
+      ]);
     }
   }
 
@@ -173,8 +177,8 @@ function drawChart() {
     height: 330,
     hAxis: {
       format: 'HH:mm',
-      minValue: new Date(0, 0, 0, 8, 0),
-      maxValue: new Date(0, 0, 0, 24, 00),
+      minValue: new Date(0, 0, 0, 10, 0),
+      maxValue: new Date(0, 0, 0, 22, 00),
     },
     timeline: {
       barLabelStyle: {
@@ -184,6 +188,10 @@ function drawChart() {
         fontName: 'Futura',
         fontSize: 16,
       },
+
+      animation:{
+
+      }
 
     }
   };
