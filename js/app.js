@@ -122,6 +122,12 @@ function clickRating(elem) {
 
       kitchenRating = this.innerHTML;
 
+      if (this.innerHTML === "Ik geef hier liever geen antwoord op."){
+        snackbar.innerHTML = "Oh jee... Is de keuken zo'n ramp? 😱";
+      } else {
+        snackbar.innerHTML = "Je beoordeling is ontvangen &mdash;&mdash; bedankt!"
+      }
+
       sendRatingToPHP();
 
       setTimeout(function(){
@@ -153,7 +159,7 @@ add_guest_remove.addEventListener("click", function(){
     if( guests_present > 0){
       guests_present -= 1;
     } else {
-      console.log("Can't remove any more guests.");
+      // console.log("Can't remove any more guests.");
     }
     updateGuestValue();
     // sendPresenceToPHP();       // Uncomment this if you would like to submit data every user interaction.
@@ -165,7 +171,7 @@ add_guest_btn.addEventListener("click", function(){
   if( guests_present < 9){
     guests_present += 1;
   } else {
-    console.log("Can't add any more guests.");
+    // console.log("Can't add any more guests.");
   }
 
   updateGuestValue();
@@ -196,26 +202,26 @@ function clickPerson(elem) {
       if (this.classList.contains('active') === true){
         this.classList.remove('active');
 
-        if (this.innerHTML === 'Olivier'){
+        if (this.id == "person_1"){
           p1_presence = false;
-        } else if (this.innerHTML === 'Hertog #1'){
+        } else if (this.id == "person_2"){
           p2_presence = false;
-        } else if (this.innerHTML === 'Hertog #2'){
+        } else if (this.id == "person_3"){
           p3_presence = false;
-        }  else if (this.innerHTML === 'Hertog #3'){
+        }  else if (this.id == "person_4"){
           p4_presence = false;
         }
 
       } else {
         this.classList.add('active');
 
-        if (this.innerHTML === 'Olivier'){
+        if (this.id == "person_1"){
           p1_presence = true;
-        } else if (this.innerHTML === 'Hertog #1'){
+        } else if (this.id == "person_2"){
           p2_presence = true;
-        } else if (this.innerHTML === 'Hertog #2'){
+        } else if (this.id === "person_3"){
           p3_presence = true;
-        }  else if (this.innerHTML === 'Hertog #3'){
+        }  else if (this.id === "person_4"){
           p4_presence = true;
         }
       }
@@ -257,7 +263,8 @@ function makeXHRForPresence(){
 
   // Log whenever the XHR is finished
   xhr.onload = function() {
-    console.log(this.responseText);
+    // console.log(this.responseText);
+    // DEBUG
   };
 
   // Function that sends the XHR,  call this whenever user input occurs.
@@ -273,7 +280,8 @@ function makeXHRForRatings(){
 
   // Log whenever the XHR is finished
   xhr.onload = function() {
-    console.log(this.responseText);
+    // console.log(this.responseText);
+    // DEBUG
   };
 
   // Function that sends the XHR,  call this whenever user input occurs.
